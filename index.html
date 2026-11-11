@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حالة قسيمه · Qesima Status</title>
+<meta name="description" content="Live status of the Qesima website, API, app links and resources.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Pick the language before first paint: the visitor's earlier choice, else the browser's language.
+  // Both languages are in the page; this only decides which container shows. No routing.
+  (function () {
+    var l;
+    try { l = localStorage.getItem("status-lang"); } catch (e) {}
+    if (l !== "ar" && l !== "en") {
+      l = (navigator.languages || [navigator.language || ""]).some(function (x) { return /^ar\b/i.test(x); }) ? "ar" : "en";
+    }
+    var h = document.documentElement;
+    h.dataset.lang = l; h.lang = l; h.dir = l === "ar" ? "rtl" : "ltr";
+  })();
+</script>
+<style>
+  @font-face { font-family: "Plex Arabic"; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2) format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+  @font-face { font-family: "Plex Arabic"; font-weight: 600; font-display: swap; src: url(fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2) format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+  @font-face { font-family: "Plex Arabic"; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-sans-arabic-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
+  @font-face { font-family: "Plex Arabic"; font-weight: 600; font-display: swap; src: url(fonts/ibm-plex-sans-arabic-latin-600-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
+  @font-face { font-family: "Readex"; font-weight: 160 700; font-display: swap; src: url(fonts/readex-pro-arabic-wght-normal.woff2) format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+  @font-face { font-family: "Readex"; font-weight: 160 700; font-display: swap; src: url(fonts/readex-pro-latin-wght-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
+
+  /* The website's palette (C:\dev\WEBSITE\src\styles\tokens.css), light and dark */
+  :root {
+    --bg: hsl(0 0% 97%);
+    --surface: hsl(0 0% 100%);
+    --line: hsl(0 1% 91%);
+    --text: hsl(0 0% 11%);
+    --muted: hsl(0 0% 37%);
+    --soft: hsl(0 0% 50%);
+    --brand: hsl(221 83% 53%);
+    --logo: hsl(221 83% 53%);
+    --hover: hsl(0 2% 91%);
+    --empty: hsl(0 1% 86%);
+    --ok: hsl(152 57% 38%);
+    --ok-soft: hsl(152 50% 94%);
+    --warn: hsl(36 92% 48%);
+    --warn-soft: hsl(40 90% 93%);
+    --bad: hsl(0 72% 51%);
+    --bad-soft: hsl(0 80% 95%);
+    --wait-soft: hsl(0 0% 93%);
+    --shadow: 0 1px 2px hsl(0 0% 0% / 0.04), 0 8px 24px -12px hsl(0 0% 0% / 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: hsl(0 0% 3%);
+      --surface: hsl(0 0% 11%);
+      --line: hsl(0 0% 15%);
+      --text: hsl(0 0% 97%);
+      --muted: hsl(0 0% 63%);
+      --soft: hsl(0 0% 50%);
+      --logo: hsl(0 0% 100%);
+      --hover: hsl(0 0% 13%);
+      --empty: hsl(0 0% 20%);
+      --ok: hsl(152 55% 45%);
+      --ok-soft: hsl(152 45% 12%);
+      --warn: hsl(38 92% 55%);
+      --warn-soft: hsl(38 60% 12%);
+      --bad: hsl(0 80% 62%);
+      --bad-soft: hsl(0 55% 14%);
+      --wait-soft: hsl(0 0% 13%);
+      --shadow: 0 1px 2px hsl(0 0% 0% / 0.4), 0 8px 24px -12px hsl(0 0% 0% / 0.6);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--text); font-family: "Plex Arabic", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; min-height: 100vh; font-size: 15px; line-height: 1.6; }
+  h1, h2 { font-family: "Readex", "Plex Arabic", system-ui, sans-serif; margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+
+  /* One container per language; the html data-lang decides which shows */
+  html[data-lang="ar"] [data-lang="en"], html[data-lang="en"] [data-lang="ar"] { display: none; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 16px 48px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 32px; }
+  .logo { display: block; height: 26px; width: auto; fill: var(--logo); }
+  .actions { display: flex; gap: 8px; }
+  .btn { font: inherit; font-size: 14px; font-weight: 600; line-height: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; text-decoration: none; white-space: nowrap; }
+  .btn:hover { background: var(--hover); }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn.primary:hover { opacity: 0.88; }
+
+  .banner { border-radius: 14px; overflow: hidden; border: 1px solid var(--tone); background: var(--surface); box-shadow: var(--shadow); margin-bottom: 24px; }
+  .banner .head { display: flex; align-items: center; gap: 10px; padding: 16px 20px; background: var(--tone-soft); }
+  .banner h1 { font-size: 18px; font-weight: 600; }
+  .banner p { margin: 0; padding: 14px 20px; color: var(--muted); }
+  .dot { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--tone); display: grid; place-items: center; }
+  .dot svg { width: 12px; height: 12px; stroke: var(--surface); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  [data-state="up"] { --tone: var(--ok); --tone-soft: var(--ok-soft); }
+  [data-state="degraded"] { --tone: var(--warn); --tone-soft: var(--warn-soft); }
+  [data-state="down"] { --tone: var(--bad); --tone-soft: var(--bad-soft); }
+  [data-state="wait"] { --tone: var(--soft); --tone-soft: var(--wait-soft); }
+
+  .card { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+  .card > .title { display: flex; align-items: baseline; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .card h2 { font-size: 17px; font-weight: 600; }
+  .range { color: var(--soft); font-size: 13px; }
+  .row { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .row:last-child { border-bottom: 0; }
+  .row .top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .row .dot { width: 16px; height: 16px; }
+  .row .dot svg { width: 10px; height: 10px; }
+  .row .name { font-weight: 600; }
+  .info { position: relative; display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--soft); color: var(--soft); font-size: 10px; font-weight: 600; line-height: 1; cursor: help; }
+  .info .tip { position: absolute; bottom: calc(100% + 8px); inset-inline-start: 50%; translate: -50% 0; width: max-content; max-width: 240px; padding: 6px 10px; border-radius: 8px; background: var(--text); color: var(--bg); font-size: 12px; font-weight: 400; line-height: 1.4; opacity: 0; pointer-events: none; transition: opacity 0.15s; z-index: 2; }
+  [dir="rtl"] .info .tip { translate: 50% 0; }
+  .info:hover .tip, .info:focus .tip { opacity: 1; }
+  .row .pct { margin-inline-start: auto; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .bars { display: flex; gap: 2px; height: 30px; }
+  .bar { flex: 1; min-width: 0; border-radius: 2px; background: var(--empty); }
+  .bar.ok { background: var(--ok); }
+  .bar.minor { background: var(--warn); }
+  .bar.major { background: var(--bad); }
+  .bar:hover { opacity: 0.7; }
+  .scale { display: flex; justify-content: space-between; color: var(--soft); font-size: 12px; margin-top: 8px; }
+  /* phones: the last 30 days only */
+  .d30 { display: none; }
+  @media (max-width: 600px) {
+    .bar:nth-child(-n + 60) { display: none; }
+    .d90 { display: none; }
+    .d30 { display: inline; }
+    .wrap { padding-top: 20px; }
+    .actions .btn:not(.lang) { display: none; }
+  }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 16px 4px 0; color: var(--soft); font-size: 12px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  footer { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; color: var(--soft); font-size: 13px; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- Arabic -->
+<div class="wrap" data-lang="ar" lang="ar" dir="rtl">
+  <header>
+    <a href="https://qesima.com/" aria-label="قسيمه"><svg class="logo" viewBox="0 0 100 24" role="img" aria-label="قسيمه"><path d="M30.56,19.8l2.05,2.07-1.97,2.07-1.9-1.92-1.78,1.92-2.05-2.07,1.93-2.07,1.9,1.92,1.82-1.92ZM65.18,2.29l1.9,1.92,1.97-2.07L67,.06l-1.82,1.92-1.9-1.92-1.92,2.07,2.05,2.07,1.78-1.92ZM70,12.67c0,.51-.03,1.11-.1,1.81-.06.7-.14,1.4-.24,2.09-.1.7-.21,1.32-.34,1.87h-10.51c-.69,0-1.31-.06-1.87-.17-.21-.04-.4-.09-.58-.15-.03.11-.05.21-.08.32h-3.6c-.9,0-1.67-.09-2.32-.26-.64-.18-1.18-.39-1.63-.63-.12-.07-.23-.13-.35-.2-.21.35-.44.71-.7,1.1h-2.31c-.96,0-1.78-.09-2.46-.26-.3-.08-.57-.16-.82-.25-.11.17-.21.34-.33.52h-4.95c-.9,0-1.67-.09-2.32-.26-.59-.16-1.09-.36-1.51-.58-.16.28-.31.56-.49.84h-6.05c-.62,0-1.16-.09-1.62-.28-.23-.09-.45-.2-.65-.33-.37.36-.79.61-1.26.78-.61.21-1.25.3-1.91.25-.66-.04-1.31-.18-1.95-.4-.63-.22-1.22-.51-1.76-.87-.34-.22-.62-.46-.88-.71-.13.18-.26.33-.39.47-.25.28-.51.5-.76.66-.25.16-.53.26-.83.33-.3.06-.64.1-1.04.1h-3.15c-.85,0-1.53-.11-2.05-.34-.36-.15-.64-.35-.88-.58-.21.07-.42.14-.62.2-.49.13-1.06.19-1.69.19-.97,0-1.84-.14-2.59-.42-.75-.28-1.35-.69-1.78-1.23-.43-.54-.65-1.18-.65-1.92,0-.69.17-1.31.52-1.86.35-.55.85-1.06,1.51-1.52.66-.47,1.46-.91,2.4-1.33.58-.26,1.22-.53,1.89-.81v-1.6h3v6.68c0,.59.13,1.01.4,1.25.27.24.75.36,1.44.36h2.18c.2,0,.38-.03.54-.11.16-.07.33-.19.5-.36.17-.17.36-.41.56-.73.2-.32.45-.72.75-1.2.41-.69.81-1.28,1.2-1.76.39-.48.77-.86,1.14-1.15.37-.29.75-.5,1.13-.62s.76-.19,1.14-.19c.62,0,1.18.13,1.67.4.49.27.96.71,1.39,1.32.43.61.85,1.44,1.26,2.49.25.58.49,1,.7,1.28.21.28.45.45.71.52.26.07.58.11.96.11h4.34c.09-.23.16-.55.23-.97.07-.42.13-.86.18-1.32.05-.46.07-.86.07-1.2l3.51-1.23c-.24,1.02-.48,1.95-.72,2.81-.16.57-.35,1.12-.55,1.66.28.07.58.13.92.18.35.04.7.06,1.07.06h4.8c.08-.28.16-.6.22-.96.06-.36.11-.74.13-1.14.02-.4.02-.81-.01-1.24l3.53-1.21c-.18.9-.36,1.69-.54,2.35-.18.66-.37,1.27-.59,1.81-.04.11-.11.21-.15.32.33.04.68.07,1.05.07h2.28c.09-.23.16-.52.22-.89.06-.37.11-.76.13-1.18.02-.42.02-.85.01-1.27l3.55-1.21c-.2.9-.39,1.69-.57,2.35-.18.66-.38,1.27-.59,1.81,0,0,0,0,0,0,.65.25,1.44.38,2.37.38h2.69c-.11-.38-.23-.74-.36-1.09s-.27-.71-.43-1.09c-.16-.38-.36-.82-.6-1.31l3.45-2.31c.11.86.2,1.76.27,2.7.07.94.07,1.91-.01,2.91,0,.03-.01.06-.01.09.16.03.32.05.49.07.24.02.49.03.74.03h8.97c.01-.24.03-.46.04-.66.01-.19.02-.43.03-.69-.07.02-.13.05-.2.06-.73.18-1.49.26-2.26.26-.66,0-1.26-.07-1.79-.2-.53-.13-.97-.33-1.33-.6-.36-.27-.63-.6-.83-1-.19-.4-.29-.86-.29-1.36,0-.73.13-1.41.39-2.04.26-.63.61-1.17,1.06-1.64.44-.47.95-.83,1.51-1.09.56-.26,1.15-.39,1.76-.39.93,0,1.76.24,2.48.73.72.49,1.29,1.21,1.71,2.18.42.97.63,2.17.63,3.61ZM5.6,14.97c.22-.01.48-.05.74-.09,0-.06,0-.11,0-.17v-2.87c-.28.1-.54.2-.77.29-.66.27-1.17.53-1.54.77-.37.25-.63.48-.78.69-.15.21-.22.41-.22.59,0,.24.14.43.43.58.29.15.79.22,1.49.22.17,0,.39,0,.67-.02ZM21.62,16.17c.35.02.69,0,1.04-.04-.2-.34-.38-.68-.54-1.04-.27-.65-.51-1.18-.72-1.59-.21-.41-.42-.71-.61-.9-.2-.19-.42-.29-.66-.29-.16,0-.35.08-.57.23-.23.16-.48.41-.77.75-.29.35-.62.82-.98,1.43-.02.04-.04.07-.06.11.22.16.47.32.77.48.42.22.89.41,1.42.57.53.16,1.09.26,1.68.3ZM67.03,11.76c-.08-.44-.19-.86-.35-1.26-.16-.42-.38-.75-.66-1.02-.27-.26-.62-.39-1.03-.39-.32,0-.61.09-.86.26-.25.18-.43.4-.56.67-.13.27-.19.54-.19.82,0,.25.07.46.2.61.13.16.33.27.6.36.27.08.61.13,1.04.13.38,0,.74-.02,1.07-.06.25-.03.49-.08.73-.13Z"/><path d="M86,21v3h-3.3c-.8,0-1.56-.32-2.12-.88l-3.7-3.7c-.56-.56-.88-1.33-.88-2.12v-3.3h3v4c0,1.66,1.34,3,3,3h4ZM97,14v4c0,1.66-1.34,3-3,3h-4v3h3.3c.8,0,1.56-.32,2.12-.88l3.7-3.7c.56-.56.88-1.33.88-2.12v-3.3h-3ZM82.7,0c-.8,0-1.56.32-2.12.88l-3.7,3.7c-.56.56-.88,1.33-.88,2.12v3.3h3v-4c0-1.66,1.34-3,3-3h4V0h-3.3ZM99.12,4.58l-3.7-3.7c-.56-.56-1.33-.88-2.12-.88h-3.3v3h4c1.66,0,3,1.34,3,3v4h3v-3.3c0-.8-.32-1.56-.88-2.12ZM93,16v-4.98c0-.67-.33-1.29-.88-1.66l-3-2.02c-.67-.45-1.56-.46-2.23,0l-3,2.02c-.55.37-.88.99-.88,1.66v4.98c0,.67.65,1.15,1.29.96l2.56-.77c.75-.22,1.55-.22,2.3,0l2.56.77c.64.19,1.29-.29,1.29-.96Z"/></svg></a>
+    <div class="actions">
+      <a class="btn" href="mailto:support@qesima.com?subject=%D8%A8%D9%84%D8%A7%D8%BA%20%D8%B9%D9%86%20%D9%85%D8%B4%D9%83%D9%84%D8%A9">أبلغ عن مشكلة</a>
+      <button class="btn primary lang" type="button" data-set-lang="en" lang="en">English</button>
+    </div>
+  </header>
+  <section class="banner" data-state="wait" data-banner>
+    <div class="head"><span class="dot" data-icon></span><h1 data-title></h1></div>
+    <p data-text></p>
+  </section>
+  <section class="card">
+    <div class="title"><h2>حالة الأنظمة</h2><span class="range"><span class="d90">آخر 90 يومًا</span><span class="d30">آخر 30 يومًا</span></span></div>
+    <div data-rows></div>
+  </section>
+  <div class="legend">
+    <span><i style="background:var(--ok)"></i>يعمل</span>
+    <span><i style="background:var(--warn)"></i>انقطاع قصير</span>
+    <span><i style="background:var(--bad)"></i>انقطاع طويل</span>
+    <span><i style="background:var(--empty)"></i>لا بيانات</span>
+  </div>
+  <footer>
+    <span>نفحص كل الأنظمة كل 20 دقيقة.</span>
+    <a href="https://qesima.com/">qesima.com</a>
+  </footer>
+</div>
+
+<!-- English -->
+<div class="wrap" data-lang="en" lang="en" dir="ltr">
+  <header>
+    <a href="https://qesima.com/en" aria-label="Qesima"><svg class="logo" viewBox="0 0 100.01 24" role="img" aria-label="Qesima"><path d="M10,21v3h-3.3c-.8,0-1.56-.32-2.12-.88l-3.7-3.7c-.56-.56-.88-1.33-.88-2.12v-3.3h3v4c0,1.66,1.34,3,3,3h4ZM21,14v4c0,1.66-1.34,3-3,3h-4v3h3.3c.8,0,1.56-.32,2.12-.88l3.7-3.7c.56-.56.88-1.33.88-2.12v-3.3h-3ZM6.7,0c-.8,0-1.56.32-2.12.88L.88,4.58c-.56.56-.88,1.33-.88,2.12v3.3h3v-4c0-1.66,1.34-3,3-3h4V0h-3.3ZM23.12,4.58l-3.7-3.7c-.56-.56-1.33-.88-2.12-.88h-3.3v3h4c1.66,0,3,1.34,3,3v4h3v-3.3c0-.8-.32-1.56-.88-2.12ZM17,16v-4.98c0-.67-.33-1.29-.88-1.66l-3-2.02c-.67-.45-1.56-.46-2.23,0l-3,2.02c-.55.37-.88.99-.88,1.66v4.98c0,.67.65,1.15,1.29.96l2.56-.77c.75-.22,1.55-.22,2.3,0l2.56.77c.64.19,1.29-.29,1.29-.96Z"/><path d="M99.51,9.91c-.34-.52-.81-.91-1.43-1.17-.62-.26-1.34-.39-2.17-.39-.91,0-1.74.18-2.52.52-.77.35-1.47.85-2.09,1.5l1.69,1.63c.36-.44.75-.76,1.17-.97s.89-.31,1.42-.31,1,.15,1.33.44c.33.29.49.71.49,1.25v.29h-1.67c-.76,0-1.43.07-2.01.21s-1.06.35-1.44.61c-.38.27-.67.6-.86,1.01-.19.41-.29.88-.29,1.41,0,.62.15,1.16.46,1.62.3.46.72.82,1.24,1.08.52.26,1.11.39,1.76.39.5,0,.98-.1,1.44-.29.45-.19.87-.46,1.26-.8.04-.04.08-.08.12-.12v1.01h2.6v-6.97c0-.79-.17-1.44-.5-1.96ZM97.12,16.2c-.27.23-.58.41-.92.54s-.7.19-1.08.19c-.26,0-.49-.05-.69-.14-.2-.09-.36-.22-.48-.39-.12-.17-.18-.36-.18-.58,0-.21.04-.39.13-.54.08-.16.21-.29.37-.41.16-.12.36-.2.6-.25s.51-.08.83-.08h1.71v1.35c-.09.1-.18.21-.29.3ZM88.89,12.73v6.12h-2.76v-6.03s.13-2.05-1.69-2.05c-1.27,0-1.84.89-2.09,1.61,0,.12.01.23.01.36v6.12h-2.76v-6.03s.13-2.05-1.69-2.05c-1.21,0-1.79.81-2.06,1.51v6.57h-2.78v-10.27h2.78v1.32c.45-.64,1.13-1.18,2.3-1.45,1.58-.36,3.17.27,3.85,2.09.42-.93,1.13-1.74,2.67-2.09,2.1-.48,4.21.79,4.21,4.28ZM68.68,3l1.88,1.9-1.76,1.9-1.88-1.9,1.76-1.9ZM67.37,8.57h2.76v10.27h-2.76v-10.27ZM64.82,14.78c.1.3.15.63.15.98,0,.63-.18,1.2-.53,1.7s-.84.89-1.46,1.17-1.31.42-2.09.42c-.94,0-1.79-.16-2.53-.47-.74-.31-1.35-.75-1.82-1.32l1.73-1.48c.4.43.84.73,1.33.92s.98.28,1.49.28c.18,0,.35-.02.5-.07s.29-.11.41-.19c.12-.08.2-.18.26-.3.06-.12.09-.25.09-.41,0-.28-.12-.51-.35-.66-.1-.08-.29-.16-.57-.26s-.63-.2-1.06-.32c-.66-.17-1.22-.37-1.67-.59-.45-.23-.82-.49-1.11-.79-.23-.25-.41-.53-.53-.85s-.18-.68-.18-1.07c0-.62.18-1.17.54-1.63s.84-.83,1.45-1.09c.6-.26,1.26-.39,1.97-.39.53,0,1.05.07,1.54.19.5.13.96.31,1.4.55.43.24.81.52,1.14.84l-1.48,1.65c-.23-.23-.5-.44-.8-.61-.3-.18-.6-.32-.89-.43-.3-.11-.57-.17-.82-.17-.22,0-.42.02-.59.06-.17.04-.32.1-.44.18-.12.08-.2.18-.26.3-.06.12-.09.25-.09.39s.03.28.11.4c.07.12.17.24.3.34.13.08.34.17.63.27s.67.22,1.14.35c.62.17,1.15.36,1.57.56.43.21.77.45,1.03.72.23.23.4.5.49.81ZM54.06,9.81c-.43-.46-.95-.82-1.53-1.07-.59-.25-1.23-.38-1.93-.38-.76,0-1.47.13-2.11.4-.64.27-1.19.64-1.66,1.12s-.83,1.05-1.09,1.72c-.26.67-.39,1.4-.39,2.2,0,1.01.23,1.91.69,2.7.46.79,1.11,1.41,1.94,1.86.83.45,1.81.68,2.92.68.48,0,.96-.06,1.44-.17.48-.12.94-.29,1.4-.52.45-.23.86-.51,1.22-.84l-1.3-1.84c-.44.35-.85.6-1.22.74-.38.14-.79.21-1.24.21-.66,0-1.23-.12-1.72-.37-.48-.25-.86-.6-1.12-1.06-.15-.26-.24-.55-.3-.86h7.31l.02-.85c.01-.74-.1-1.42-.33-2.04-.23-.62-.57-1.16-1-1.62ZM49.17,11.05c.39-.23.88-.34,1.47-.34.38,0,.72.08,1.03.24.31.16.57.38.77.65s.31.59.34.95v.06h-4.68c.05-.21.11-.42.19-.59.2-.42.5-.74.89-.97ZM41.82,6.98c-.62-.63-1.35-1.13-2.18-1.48s-1.75-.52-2.75-.52-1.92.17-2.77.52c-.85.35-1.58.84-2.19,1.48-.62.63-1.09,1.38-1.44,2.23-.34.85-.51,1.79-.51,2.82s.17,1.94.51,2.8c.34.85.82,1.6,1.44,2.22.61.63,1.35,1.12,2.19,1.47.85.35,1.77.52,2.77.52.85,0,1.64-.14,2.38-.39l1.76,2.35,2.14-1.59-1.59-2.14c.08-.08.17-.15.25-.23.62-.63,1.1-1.38,1.45-2.23.34-.85.51-1.79.51-2.8s-.17-1.94-.51-2.8-.83-1.6-1.45-2.23ZM38.03,12.53l-2.19,1.53,1.61,2.16c-.19.03-.38.06-.58.06-.76,0-1.44-.18-2.04-.55-.6-.37-1.06-.87-1.4-1.5-.34-.63-.51-1.37-.51-2.19,0-.62.1-1.19.29-1.72.19-.52.47-.98.83-1.36.36-.38.78-.68,1.26-.89.49-.21,1.01-.32,1.58-.32s1.09.11,1.57.32c.48.21.9.51,1.25.9s.63.84.83,1.36c.19.52.29,1.08.29,1.69s-.1,1.19-.29,1.71c-.17.46-.42.86-.72,1.21l-1.79-2.39Z"/></svg></a>
+    <div class="actions">
+      <a class="btn" href="mailto:support@qesima.com?subject=Problem%20report">Report a problem</a>
+      <button class="btn primary lang" type="button" data-set-lang="ar" lang="ar">العربية</button>
+    </div>
+  </header>
+  <section class="banner" data-state="wait" data-banner>
+    <div class="head"><span class="dot" data-icon></span><h1 data-title></h1></div>
+    <p data-text></p>
+  </section>
+  <section class="card">
+    <div class="title"><h2>System status</h2><span class="range"><span class="d90">Last 90 days</span><span class="d30">Last 30 days</span></span></div>
+    <div data-rows></div>
+  </section>
+  <div class="legend">
+    <span><i style="background:var(--ok)"></i>Operational</span>
+    <span><i style="background:var(--warn)"></i>Short outage</span>
+    <span><i style="background:var(--bad)"></i>Long outage</span>
+    <span><i style="background:var(--empty)"></i>No data</span>
+  </div>
+  <footer>
+    <span>We check every system every 20 minutes.</span>
+    <a href="https://qesima.com/en">qesima.com</a>
+  </footer>
+</div>
+
+<script>
+  // Slugs match .upptimerc.yml. Data: history/summary.json (daily minutes down, hourly) and
+  // history/<slug>.yml (current status, written by each check).
+  var SITES = [
+    { slug: "platform",
+      ar: ["منصة قسيمه", "الموقع qesima.com"],
+      en: ["Qesima Platform", "The website, qesima.com"] },
+    { slug: "qesima-api",
+      ar: ["واجهة قسيمه البرمجية", "تسجيل الدخول والبيانات والإشعارات في التطبيق"],
+      en: ["Qesima API", "Sign-in, data and notifications in the app"] },
+    { slug: "application",
+      ar: ["التطبيق", "الروابط المشتركة التي تفتح التطبيق"],
+      en: ["Application", "Shared links that open the app"] },
+    { slug: "resources",
+      ar: ["موارد قسيمه", "الصور والملفات"],
+      en: ["Qesima Resources", "Images and files"] }
+  ];
+  var DAYS = 90;
+  var MINOR_MAX = 60; // up to an hour down in a day reads as a short outage
+
+  var COPY = {
+    ar: {
+      up: ["كل الأنظمة تعمل", "لا نعلم بأي مشكلة تؤثر على أنظمتنا."],
+      degraded: ["بعض الأنظمة بطيئة", "نعمل على ذلك. قد تلاحظ بطئًا في بعض الخدمات."],
+      down: ["بعض الأنظمة متوقفة", "نعمل على إعادتها. شكرًا لصبرك."],
+      wait: ["جارٍ جمع البيانات", "بدأنا المراقبة للتو. تظهر النتائج بعد أول فحص."],
+      none: "لا بيانات", ok: "بلا انقطاع", min: " دقيقة انقطاع", uptime: "% تشغيل",
+      locale: "ar-u-nu-latn"
+    },
+    en: {
+      up: ["We're fully operational", "We're not aware of any issues affecting our systems."],
+      degraded: ["Some systems are slow", "We're on it. Some services may respond slowly."],
+      down: ["Some systems are down", "We're working to restore them. Thanks for your patience."],
+      wait: ["Collecting data", "Monitoring has just started. Results appear after the first check."],
+      none: "No data", ok: "No downtime", min: " min down", uptime: "% uptime",
+      locale: "en-GB"
+    }
+  };
+  var ICONS = {
+    up: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+    degraded: '<svg viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01"/></svg>',
+    down: '<svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg>',
+    wait: '<svg viewBox="0 0 24 24"><path d="M7 12h.01M12 12h.01M17 12h.01"/></svg>'
+  };
+
+  // Language switch: show one container, hide the other. No routing, no reload.
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-set-lang]");
+    if (!b) return;
+    var l = b.getAttribute("data-set-lang"), h = document.documentElement;
+    h.dataset.lang = l; h.lang = l; h.dir = l === "ar" ? "rtl" : "ltr";
+    try { localStorage.setItem("status-lang", l); } catch (err) {}
+    var other = document.querySelector('.wrap[data-lang="' + l + '"] [data-set-lang]');
+    if (other) other.focus();
+  });
+
+  function day(d) { return d.toISOString().slice(0, 10); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function yml(text) {
+    var o = {};
+    text.split("\n").forEach(function (line) {
+      var m = /^(\w+):\s*(.*)$/.exec(line);
+      if (m) o[m[1]] = m[2].trim();
+    });
+    return o;
+  }
+
+  function get(url, type) {
+    return fetch(url, { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r[type]() : null; })
+      .catch(function () { return null; });
+  }
+
+  function render(summary, current) {
+    var bySlug = {};
+    (summary || []).forEach(function (s) { bySlug[s.slug] = s; });
+    var today = new Date();
+    var dates = [];
+    for (var i = DAYS - 1; i >= 0; i--) dates.push(day(new Date(today.getTime() - i * 864e5)));
+
+    var states = SITES.map(function (s) {
+      var c = current[s.slug];
+      return c && c.status ? c.status : (bySlug[s.slug] && bySlug[s.slug].status) || "wait";
+    });
+    var overall = states.indexOf("down") >= 0 ? "down"
+      : states.indexOf("degraded") >= 0 ? "degraded"
+      : states.every(function (x) { return x === "up"; }) ? "up" : "wait";
+
+    ["ar", "en"].forEach(function (lang) {
+      var t = COPY[lang], root = document.querySelector('.wrap[data-lang="' + lang + '"]');
+      var banner = root.querySelector("[data-banner]");
+      banner.dataset.state = overall;
+      banner.querySelector("[data-icon]").innerHTML = ICONS[overall];
+      banner.querySelector("[data-title]").textContent = t[overall][0];
+      banner.querySelector("[data-text]").textContent = t[overall][1];
+      var fmt = new Intl.DateTimeFormat(t.locale, { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+
+      root.querySelector("[data-rows]").innerHTML = SITES.map(function (s, n) {
+        var sum = bySlug[s.slug] || {}, cur = current[s.slug] || {};
+        var down = sum.dailyMinutesDown || {};
+        var start = (cur.startTime || "").slice(0, 10);
+        var counted = 0, minutes = 0;
+        var bars = dates.map(function (d) {
+          var label = fmt.format(new Date(d + "T00:00:00Z")) + " · ";
+          if (!start || d < start) return '<span class="bar" title="' + esc(label + t.none) + '"></span>';
+          var m = down[d] || 0;
+          counted++; minutes += m;
+          var cls = m === 0 ? "ok" : m <= MINOR_MAX ? "minor" : "major";
+          return '<span class="bar ' + cls + '" title="' + esc(label + (m ? m + t.min : t.ok)) + '"></span>';
+        }).join("");
+        var pct = counted ? (100 - (minutes / (counted * 1440)) * 100) : null;
+        var pctText = pct === null ? t.none : (pct === 100 ? "100" : pct.toFixed(pct > 99.99 ? 3 : 2)) + t.uptime;
+        return '<div class="row" data-state="' + states[n] + '">' +
+          '<div class="top"><span class="dot">' + ICONS[states[n]] + '</span>' +
+          '<span class="name">' + esc(s[lang][0]) + '</span>' +
+          '<span class="info" tabindex="0" aria-label="' + esc(s[lang][1]) + '">i<span class="tip" role="tooltip">' + esc(s[lang][1]) + '</span></span>' +
+          '<span class="pct">' + pctText + '</span></div>' +
+          '<div class="bars" aria-hidden="true">' + bars + '</div></div>';
+      }).join("");
+    });
+  }
+
+  function load() {
+    var current = {};
+    Promise.all([get("history/summary.json", "json")].concat(SITES.map(function (s) {
+      return get("history/" + s.slug + ".yml", "text").then(function (t) { if (t) current[s.slug] = yml(t); });
+    }))).then(function (r) { render(r[0], current); });
+  }
+
+  render(null, {});
+  load();
+  // the data changes at most every 20 minutes; refresh while the page stays open
+  setInterval(load, 5 * 60 * 1000);
+</script>
+</body>
+</html>

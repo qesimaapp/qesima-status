@@ -1,31 +1,34 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+# Qesima uptime checks. The public page is our own index.html (served from this branch by GitHub Pages
+# at status.qesima.com); Upptime only runs the checks and writes the data it reads (history/).
+owner: qesimaapp
+repo: qesima-status
 
+# Slugs are keys the page uses for its names in both languages; change them there too.
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Secret Site
-    url: $SECRET_SITE
+  - name: Qesima Platform
+    slug: platform
+    url: https://qesima.com
+  - name: Qesima API
+    slug: qesima-api
+    url: https://api.qesima.com/api/health
+  - name: Application
+    slug: application
+    url: https://link.qesima.com/
+  - name: Qesima Resources
+    slug: resources
+    url: https://assets.qesima.com/social/48/instagram.png
 
+# A downtime issue is assigned to the owner, so GitHub emails it.
+assignees:
+  - qesimaapp
+
+workflowSchedule:
+  # owner's call (2026-11-11): every 20 minutes is enough at this stage
+  uptime: "*/20 * * * *"
+  # hourly, so today's bar on the page is at most an hour old
+  summary: "0 * * * *"
+
+# Upptime's own site still builds to the gh-pages branch, but Pages serves this branch, so it is unused.
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
-  navbar:
-    - title: Status
-      href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
-
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+  cname: status.qesima.com
+  name: Qesima Status
